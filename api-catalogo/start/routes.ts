@@ -14,4 +14,4 @@ Route.post('login', async ({ auth, request, response }) => {
 
 Route.post('/users', 'UsersController.store')
 
-Route.post('/post', 'PostsController.store')
+Route.resource('/post', 'PostsController')

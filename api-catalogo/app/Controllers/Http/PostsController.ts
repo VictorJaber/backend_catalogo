@@ -9,7 +9,12 @@ export default class PostsController {
     size: '5mb',
   }
 
-  public async index({}: HttpContextContract) {}
+  public async index({}: HttpContextContract) {
+    const post = await Post.all()
+    return {
+      data: post,
+    }
+  }
 
   public async store({ request, response }: HttpContextContract) {
     const body = request.body()
@@ -34,7 +39,19 @@ export default class PostsController {
     }
   }
 
-  public async show({}: HttpContextContract) {}
+  public async show({ params, response }: HttpContextContract) {
+    try {
+      const post = await Post.findOrFail(params.id)
+      return {
+        data: post,
+      }
+    } catch (error) {
+      return response.status(404).json({
+        message: 'Post não encontrado',
+        error: error.message,
+      })
+    }
+  }
 
   public async update({}: HttpContextContract) {}
 
